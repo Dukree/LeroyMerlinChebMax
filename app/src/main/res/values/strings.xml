@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">LeroyMerlinChebMax</string>
+    <string name="title_activity_shopping_cart">ShoppingCart</string>
+    <string name="shopping_cart_price_label">Добавить в корзину</string>
+</resources>
