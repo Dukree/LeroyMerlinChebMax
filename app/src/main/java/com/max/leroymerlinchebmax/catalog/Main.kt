@@ -1,8 +1,10 @@
 package com.max.testcompose.screens
 
 
+import android.telecom.Call
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -22,22 +24,27 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.Navigator
+import androidx.navigation.compose.ComposeNavigator
+import com.max.leroymerlinchebmax.*
 import com.max.leroymerlinchebmax.R
-import com.max.leroymerlinchebmax.Result
 import com.max.leroymerlinchebmax.cart.models.CartItem
 import com.max.leroymerlinchebmax.catalog.CustomPuttyViewModel
 import com.max.leroymerlinchebmax.catalog.models.CusPutty
 import com.max.leroymerlinchebmax.catalog.models.Putty
-import com.max.leroymerlinchebmax.ui.theme.Poloska
-import com.max.leroymerlinchebmax.ui.theme.Text77Psht
-import com.max.leroymerlinchebmax.ui.theme.backgroundColor
+import com.max.leroymerlinchebmax.screens.ProductDetails
+import com.max.leroymerlinchebmax.ui.theme.*
 
 @Composable
-fun MainsScreen(viewModel: CustomPuttyViewModel) {
+fun MainsScreen(viewModel: CustomPuttyViewModel,
+navController:NavController) {
     val catalogState by viewModel.cusPuttyState.collectAsState()
     val cartState by viewModel.cartState.collectAsState()
+
     Column(
         modifier = Modifier
             .size(360.dp, 780.dp)
@@ -113,16 +120,19 @@ fun MainsScreen(viewModel: CustomPuttyViewModel) {
                         .size(62.dp, 20.dp)
                 )
             }
+
                 when (catalogState) {
                     is Result.Success<CusPutty> -> {
-                        LazyColumn(modifier = Modifier.fillMaxSize()) {
+
+                        LazyColumn(modifier = Modifier
+                            .fillMaxSize()) {
                             val catalog = (catalogState as Result.Success<CusPutty>).data
                             items(catalog.count) { index ->
                                 CusPuttyListItem(putty = catalog.getByPosition(index),
                                     cartState = cartState,
                                     onAddPress = { putty ->
                                         viewModel.addCartItem(putty)
-                                    })
+                                    },navController)
                             }
                         }
                     }
@@ -147,15 +157,18 @@ private fun CusPuttyListItem(
     putty: Putty,
     cartState: Result<CartItem> = Result.Loading,
     onAddPress: (putty: Putty) -> Unit = {},
+    navController: NavController
 ) {
-    Row(modifier = Modifier.fillMaxWidth()) {
+    Row(modifier = Modifier
+        .clickable { navController.navigate(DetailScreen.Detail.route)}
+        .fillMaxWidth()) {
 
         PuttyImage(putty = putty)
         Column(
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            Text(text = putty.title, color = Color.Black)
+            Text( text = putty.title, color = Color.Black)
             Row(modifier = Modifier.fillMaxWidth()) {
                 Image(
                     painter = painterResource(id = R.drawable.vector),

@@ -3,8 +3,10 @@ package com.max.leroymerlinchebmax.screens
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.runtime.Composable
@@ -15,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -22,33 +25,16 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.max.leroymerlinchebmax.*
 import com.max.leroymerlinchebmax.R
+import com.max.leroymerlinchebmax.ui.theme.LeroyMerlinChebMaxTheme
 import com.max.leroymerlinchebmax.ui.theme.backgroundColor
+import com.max.leroymerlinchebmax.ui.theme.backgroundColors
 import com.max.testcompose.screens.Cart
 import com.max.testcompose.screens.MainsScreen
 
 
 @Composable
-fun ProductDetails() {
-//  Scaffold(modifier = Modifier.size(360.dp,640.dp), bottomBar = {
-//      BottomAppBar(Modifier.size(360.dp,56.dp)) {
-//              IconButton(onClick = { nav }) {
-//                  Column() {
-//                      Icon(imageVector = Icons.Default.Search, contentDescription = "Search", tint = Color.Black, modifier = Modifier.width(176.dp)
-//                      )
-//                      Text(textAlign = TextAlign.Center, text = "Корзина", color = Color.Black, modifier = Modifier.width(176.dp), fontSize = 10.sp )
-//                  }
-//
-//              }
-//
-//
-//        IconButton(onClick = ) {
-//                Icon(imageVector = Icons.Default.ShoppingCart, contentDescription = "ShoppingCart", tint = Color.Black, modifier = Modifier.width(176.dp))
-//
-//
-//        }
-//      }
-//  }) {
-          Column(modifier = Modifier.fillMaxSize()) {
+fun ProductDetails(onBackPress: () -> Unit = {}) {
+          Column(modifier = Modifier.size(360.dp,640.dp)) {
               Row(
                   modifier = Modifier
                       .size(360.dp, 56.dp)
@@ -56,18 +42,17 @@ fun ProductDetails() {
                   horizontalArrangement = Arrangement.SpaceBetween,
                   verticalAlignment = Alignment.CenterVertically
               ) {
-                  Image(
-                      painter = painterResource(id = R.drawable.ic_baseline_west_24),
-                      contentDescription = "Back",
+                IconButton(onClick = { onBackPress}) {
+                    Icon(Icons.Default.ArrowBack, contentDescription = "ArrowBack", tint = Color.Black  )
+                }
+
+
+
                       //modifier = Modifier.padding(20.dp, 20.dp, 0.dp, 0.dp)
-                  )
+
                   Image(
                       painter = painterResource(id = R.drawable.ic_baseline_more_vert_24),
                       contentDescription = "More",
-                      //modifier = Modifier
-                     //     .fillMaxWidth()
-                     //     .padding(0.dp, 20.dp, 32.dp, 0.dp),
-
                   )
               }
               Row(modifier = Modifier.fillMaxWidth(), Arrangement.Center)
@@ -90,7 +75,8 @@ fun ProductDetails() {
                       modifier = Modifier
                           .size(280.dp, 44.dp),
                       fontWeight = FontWeight.Bold,
-                      color = Color.Black
+                      color = Color.Black,
+                      fontSize = 16.sp
                   )
                   Image(
                       painter = painterResource(id = R.drawable.ic_baseline_bookmark_border_24),
@@ -102,7 +88,6 @@ fun ProductDetails() {
               }
               Row(modifier = Modifier
                   .fillMaxWidth()
-                  .fillMaxWidth()
                   .padding(16.dp, 22.dp, 0.dp, 20.dp)) {
                   Image(painter = painterResource(id = R.drawable.vector), contentDescription = "Stars", modifier = Modifier.size(12.dp,12.dp) )
                   Image(painter = painterResource(id = R.drawable.vector), contentDescription = "Stars", modifier = Modifier.size(12.dp,12.dp) )
@@ -110,40 +95,26 @@ fun ProductDetails() {
                   Image(painter = painterResource(id = R.drawable.vector), contentDescription = "Stars", modifier = Modifier.size(12.dp,12.dp) )
                   Image(painter = painterResource(id = R.drawable.vector), contentDescription = "Stars", modifier = Modifier.size(12.dp,12.dp) )
               }
-//              Row(modifier = Modifier
-//                  .size(360.dp, 48.dp)
-//                  .padding(8.dp, 6.dp, 0.dp, 9.dp)) {
-//                  Image(
-//                      painter = painterResource(id = R.drawable.reviews),
-//                      contentDescription = "Reviews",
-//                      modifier = Modifier
-//                          .size(181.dp, 48.dp)
-//
-//                  )
-//              }
-
-
+              Divider()
               Row(modifier = Modifier
-                  .height(80.dp)
-                  .width(360.dp)
+                  .size(360.dp, 80.dp)
                   .padding(16.dp, 0.dp, 16.dp, 0.dp),
                   horizontalArrangement = Arrangement.SpaceBetween,
                   verticalAlignment = Alignment.CenterVertically
                    ) {
 
                   Text(
-                      text = "65 Р/шт.",
+                      text = "65 ₽/шт.",
                       textAlign = TextAlign.Start,
                       //modifier = Modifier.padding(16.dp, 0.dp, 0.dp,0.dp),
                       fontWeight = FontWeight.Bold,
                       fontSize = 18.sp,
                       color = Color.Black
                   )
-                  //Spacer(modifier = Modifier.size(100.dp ))
+                  Spacer(modifier = Modifier.width(100.dp))
                   Buttons()
-
               }
-              MainScreen()
+
           }
 
       }
@@ -155,21 +126,23 @@ fun Buttons (){
     Button(
         modifier = Modifier
             .size(125.dp, 48.dp)
-            //.padding(0.dp,0.dp,16.dp,0.dp)
+            .padding(0.dp, 0.dp, 0.dp, 0.dp)
             ,
-
-
-        colors = ButtonDefaults.buttonColors(
-            backgroundColor = MaterialTheme.colors.backgroundColor,
-            contentColor = Color.White
-        ),
+        colors = ButtonDefaults.buttonColors(colors.backgroundColors),
         onClick = {
 
         }) {
-        Text(text = "В корзину", fontSize = 16.sp)
+        Text(text = "В корзину", fontSize = 16.sp,
+        color = Color.White)
     }
 }
+@Preview(showBackground = true)
+@Composable
+fun ProductDetailPreview() {
 
+        ProductDetails()
+
+}
 
 
 

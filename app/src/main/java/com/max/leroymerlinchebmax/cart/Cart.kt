@@ -39,7 +39,7 @@ fun Cart(viewModel: CartViewModel,
 ) {
     val state by viewModel.state.collectAsState()
     val navController = rememberNavController()
-    Scaffold(
+    Scaffold(modifier = Modifier.fillMaxSize(),
         bottomBar = {
             BottomBar(navController = navController)
         },

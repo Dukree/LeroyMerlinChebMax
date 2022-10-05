@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.max.leroymerlinchebmax.screens.ProductDetails
 
 import com.max.leroymerlinchebmax.ui.theme.LeroyMerlinChebMaxTheme
@@ -18,6 +20,8 @@ import java.util.*
 
 
 class MainActivity : ComponentActivity() {
+    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
